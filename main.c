@@ -30,18 +30,12 @@ int main(){
   printf("rows: %d\n", rows);
   printf("cols: %d\n", cols);
 
-
-  int **photo=(int**)malloc(rows*sizeof(int*));
+  // aloca memória com calloc, zerando todos os valores da matriz
+  int **photo=(int**)calloc(rows,sizeof(int*));
 
   for(int i=0; i<rows; i++){
-    photo[i]=(int*)malloc(cols*sizeof(int));
-    for(int j=0; j<cols; j++){
-      photo[i][j]=0;
-    }
+    photo[i]=(int*)calloc(cols,sizeof(int));
   }
-
-  //aloca matriz com os valores obtidos
-  //int photo[rows][cols];
 
   rewind(file);
 
@@ -55,13 +49,24 @@ int main(){
     }
   }
 
-  for(int i=0; i<rows; i++){
-    for(int j=0; j<cols; j++){
+  for(int i=0; i<rows; ++i){
+    for(int j=0; j<cols; ++j){
       printf("%d\t", photo[i][j]);
     }
+    printf("\n");
   }
 
-  printf("%d", photo[2][0]);
+  //printf("%d", photo[2][0]);
+
+  printf("\n");
+  printf("\n");
+
+  for (int i=1;i<rows-1;i++){
+    for(int j=1;j<cols-1;j++){
+      printf("%d\t",photo[i][j] ); //pegou os numeros sem ser os da borda
+    }
+    printf("\n");
+  }
 
   //não esquecer nunca de fechar
   fclose(file);
