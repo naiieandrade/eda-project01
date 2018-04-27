@@ -1,12 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <stdio.h>
-#include <stdlib.h>
-
 int main() {
 
-  	char arquivo [] = "matrix.txt";
+  	char arquivo [] = "asphalt01.txt";
 	char caracteres;
 	int qtdeLinhas = 0;
 	int qtdeColunas = 0;
@@ -38,14 +35,14 @@ int main() {
 	qtdeColunas +=1; 
 
 	int **imagem=(int**)calloc(qtdeLinhas,sizeof(int*));
-	int **matrizMedia=(int **)calloc(qtdeLinhas,sizeof(int**));
+	double **matrizMedia=(double **)calloc(qtdeLinhas,sizeof(double*));
 
 	for(int auxLinhas = 0; auxLinhas < qtdeLinhas; auxLinhas ++){
 		imagem[auxLinhas]=(int*)calloc(qtdeColunas,sizeof(int));
 	}
 
 	for(int auxLinhas = 0; auxLinhas < qtdeLinhas; auxLinhas ++){
-		matrizMedia[auxLinhas]=(int*)calloc(qtdeColunas,sizeof(int));
+		matrizMedia[auxLinhas]=(double*)calloc(qtdeColunas,sizeof(double));
 	}
 
 	rewind(file); 
@@ -64,9 +61,9 @@ int main() {
 	    }
 	}
 
-	for(int auxLinhas = 0; auxLinhas < qtdeLinhas; auxLinhas +=3) {
+	for(int auxLinhas = 0; auxLinhas < qtdeLinhas -2; auxLinhas +=1) {
 
-		for(int auxColunas = 0; auxColunas < qtdeColunas; auxColunas +=3) {
+		for(int auxColunas = 0; auxColunas < qtdeColunas -2; auxColunas +=1) {
 
 			for(int linhas = auxLinhas; linhas < auxLinhas +3; linhas ++) {
 
@@ -78,13 +75,14 @@ int main() {
 			}
 			media = (double) soma/contador;
 			matrizMedia[auxLinhas][auxColunas] = media;
-			media = 0;	
+			media = 0;
+			soma = 0;	
 		}
 	}
 
-	for(int auxLinhas = 0; auxLinhas < qtdeLinhas; auxLinhas +=3) {
+	for(int auxLinhas = 0; auxLinhas < qtdeLinhas -2; auxLinhas +=1) {
 
-		for(int auxColunas = 0; auxColunas < qtdeColunas; auxColunas +=3) {
+		for(int auxColunas = 0; auxColunas < qtdeColunas-2; auxColunas +=1) {
 
 			for(int linhas = auxLinhas; linhas < auxLinhas +3; linhas ++) {
 
@@ -109,8 +107,6 @@ int main() {
 		printf("\n");
 	}
 
-	//media = (double)media/(qtdeLinhas * qtdeColunas);
-	//printf("%.2lf\n", media);
 	fclose(file);
 
 	for(int aux = 0; aux < qtdeLinhas; aux ++) {
