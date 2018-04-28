@@ -3,8 +3,9 @@
 #include <math.h>
 
 int main() {
-
-  	char arquivo [] = "teste.txt";
+	int soma_media_dec=0;
+	int count_expoente = 0;
+  	char arquivo [] = "matrix.txt";
 	char caracteres;
 	int qtdeLinhas = 0;
 	int qtdeColunas = 0;
@@ -59,7 +60,9 @@ int main() {
 	    	for(int auxColunas = 0; auxColunas < qtdeColunas; auxColunas ++){
 	
 	      		fscanf(file, "%d%*c", &imagem[auxLinhas][auxColunas]);
-	      	}	
+	      		
+				
+			}	
 	    }
 	}
 
@@ -101,25 +104,43 @@ int main() {
 	}
 
 	for(int auxLinhas = 0; auxLinhas < qtdeLinhas -2; auxLinhas +=1) {
-
+		count_expoente =0;
 		for(int auxColunas = 0; auxColunas < qtdeColunas-2; auxColunas +=1) {
-
 			vetorNormalizado[auxLinhas] = imagem[auxLinhas][auxColunas];
+			
 			for(int linhas = auxLinhas; linhas < auxLinhas +3; linhas ++) {
-
+			
 				for(int colunas = auxColunas; colunas < auxColunas +3; colunas ++) {
-
-					vetorNormalizado[linhas] = pow(vetorNormalizado[linhas],2);
+					
+					//tirar o soma caso quiser ver cada numero
+					vetorNormalizado[linhas]+= imagem[linhas][colunas] * pow(2,count_expoente);
+					
+					//printf("%d\t",vetorNormalizado[linhas]);
+					count_expoente++;
+						
 				}
+					soma_media_dec+=vetorNormalizado[linhas];
+						
+					//printf("%d\t",soma_media_dec);
+				
+				//printf(" %d\t",vetorNormalizado[linhas]);
+				
+				//está dando erro na soma final está somando um a mais na primeira linha 
 			}	
+			if(imagem[0][0]==1){
+				soma_media_dec= soma_media_dec-1;
+			}
+
+			printf("%d\t",soma_media_dec);	
 		}
+		
 	}
 
 	for(int auxLinhas = 0; auxLinhas < qtdeLinhas; auxLinhas ++) {
 
 		for(int auxColunas = 0; auxColunas < qtdeLinhas; auxColunas ++) {
 
-			printf("%d\t", vetorNormalizado[auxLinhas]);
+			//printf("%d\t", vetorNormalizado[auxLinhas]);
 		}
 		printf("\n");
 	}
