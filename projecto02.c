@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 int main() {
 
-  	char arquivo [] = "asphalt01.txt";
+  	char arquivo [] = "teste.txt";
 	char caracteres;
 	int qtdeLinhas = 0;
 	int qtdeColunas = 0;
@@ -34,8 +35,9 @@ int main() {
 
 	qtdeColunas +=1; 
 
-	int **imagem=(int**)calloc(qtdeLinhas,sizeof(int*));
-	double **matrizMedia=(double **)calloc(qtdeLinhas,sizeof(double*));
+	int **imagem = (int**) calloc(qtdeLinhas,sizeof(int*));
+	double **matrizMedia = (double **) calloc(qtdeLinhas,sizeof(double*));
+	int *vetorNormalizado = (int*) malloc(qtdeLinhas * sizeof(int));
 
 	for(int auxLinhas = 0; auxLinhas < qtdeLinhas; auxLinhas ++){
 		imagem[auxLinhas]=(int*)calloc(qtdeColunas,sizeof(int));
@@ -78,7 +80,7 @@ int main() {
 			media = 0;
 			soma = 0;	
 		}
-	}
+	}	
 
 	for(int auxLinhas = 0; auxLinhas < qtdeLinhas -2; auxLinhas +=1) {
 
@@ -98,11 +100,26 @@ int main() {
 		}
 	}
 
+	for(int auxLinhas = 0; auxLinhas < qtdeLinhas -2; auxLinhas +=1) {
+
+		for(int auxColunas = 0; auxColunas < qtdeColunas-2; auxColunas +=1) {
+
+			vetorNormalizado[auxLinhas] = imagem[auxLinhas][auxColunas];
+			for(int linhas = auxLinhas; linhas < auxLinhas +3; linhas ++) {
+
+				for(int colunas = auxColunas; colunas < auxColunas +3; colunas ++) {
+
+					vetorNormalizado[linhas] = pow(vetorNormalizado[linhas],2);
+				}
+			}	
+		}
+	}
+
 	for(int auxLinhas = 0; auxLinhas < qtdeLinhas; auxLinhas ++) {
 
 		for(int auxColunas = 0; auxColunas < qtdeLinhas; auxColunas ++) {
 
-			printf("%d\t", imagem[auxLinhas][auxColunas]);
+			printf("%d\t", vetorNormalizado[auxLinhas]);
 		}
 		printf("\n");
 	}
@@ -119,6 +136,7 @@ int main() {
 
 	free(imagem);
 	free(matrizMedia);
+	free(vetorNormalizado);
 
 	return 0;
 }
