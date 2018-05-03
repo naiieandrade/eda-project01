@@ -3,7 +3,7 @@
 #include <math.h>
 
 int main() {
-	//int soma_media_dec=0;
+	
 	int count_expoente = 0;
   	char arquivo [] = "asphalt.txt";
 	char caracteres;
@@ -48,10 +48,6 @@ int main() {
 	for(int auxLinhas = 0; auxLinhas < qtdeLinhas; auxLinhas ++){
 		imagem[auxLinhas]=(int*)calloc(qtdeColunas,sizeof(int));
 	}
-
-	/*for(int auxLinhas = 0; auxLinhas < qtdeLinhas; auxLinhas ++){
-		matrizMedia[auxLinhas]=(double*)calloc(qtdeColunas,sizeof(double));
-	}*/
 
 	rewind(file); 
 
@@ -115,13 +111,13 @@ int main() {
 					} else {
 						imagem[linhas][colunas] = 0;
 					}
-					printf("Valor: %d\t", imagem[auxLinhas][auxColunas]);
 				}
-				printf("\n");
 			}	
 		}
 	}
+
 	soma = 0;
+	
 	for(int auxLinhas = 0; auxLinhas < qtdeLinhas -2; auxLinhas +=1) {
 
 		count_expoente = 0;
@@ -141,8 +137,7 @@ int main() {
 
 			 		soma_media_dec[auxLinhas] = soma_media_dec[auxLinhas] - 1;	
 			 	} 
-				soma += soma_media_dec[linhas] += vetorNormalizado[linhas];
-				printf("Soma final: %d\n", soma);
+				soma += soma_media_dec[linhas] += vetorNormalizado[linhas];				
 			}
 		}
 	}

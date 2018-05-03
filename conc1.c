@@ -3,7 +3,7 @@
 #include<string.h>
 #include<time.h>
 
-#define MAXSTRLEN 20 //PRECISA DEFINIR POR ALOCAÇÃO DIMANICA?
+#define MAXSTRLEN 20 
 #define MAXWORDS 25
 
 int isValueInArray(int number, int *vector);
@@ -11,27 +11,27 @@ int isValueInArray(int number, int *vector);
 int main(){
 
   int lowerLimit = 1, upperLimit = 50;
-  char array_test_asphalt[MAXWORDS][MAXSTRLEN];// = {0};
-  char array_training_asphalt[MAXWORDS][MAXSTRLEN];// = {0};
-  char array_test_grass[MAXWORDS][MAXSTRLEN];// = {0};
-  char array_training_grass[MAXWORDS][MAXSTRLEN];// = {0};
+  char array_test_asphalt[MAXWORDS][MAXSTRLEN];
+  char array_training_asphalt[MAXWORDS][MAXSTRLEN];
+  char array_test_grass[MAXWORDS][MAXSTRLEN];
+  char array_training_grass[MAXWORDS][MAXSTRLEN];
   int vector_test[MAXWORDS] = {0};
   int vector_training[MAXWORDS] = {0};
 
   srand(time(NULL));
 
-  // 25 first numbers random for test
+  
   for(int i=1; i<=25; i++){
-    int num = 0;
-    num = lowerLimit + rand() % (upperLimit - lowerLimit + 1);
 
-    while(isValueInArray(num,vector_test) == 1){
-      num = lowerLimit + rand() % (upperLimit - lowerLimit + 1);
-    }
-    vector_test[i]=num;
+        int num = 0;
+        num = lowerLimit + rand() % (upperLimit - lowerLimit + 1);
+
+        while(isValueInArray(num,vector_test) == 1){
+          num = lowerLimit + rand() % (upperLimit - lowerLimit + 1);
+        }
+        vector_test[i]=num;
   }
 
-  // pass int vector to string "ASPHALT"
   for (int i=1; i<=25; i++){
     char str[2];
     int num;
@@ -42,7 +42,6 @@ int main(){
     strcat(array_test_asphalt[i], ".txt");
   }
 
-  // pass int vector to string "GRASS"
   for (int i=1; i<=25; i++){
     char str[2];
     int num;
@@ -53,7 +52,6 @@ int main(){
     strcat(array_test_grass[i], ".txt");
   }
 
-  // puts others 25 random numbers in training vector
   int pointer = 1;
   for (int num=1; num<=50; num++){
     if(isValueInArray(num, vector_test) == 0 && isValueInArray(num, vector_training) == 0){
@@ -62,7 +60,6 @@ int main(){
     }
   }
 
-  // pass int vector to string "ASPHALT"
   for (int i=1; i<=25; i++){
     char str[2];
     int num;
@@ -73,7 +70,6 @@ int main(){
     strcat(array_training_asphalt[i], ".txt");
   }
 
-  // pass int vector to string "GRASS"
   for (int i=1; i<=25; i++){
     char str[2];
     int num;
