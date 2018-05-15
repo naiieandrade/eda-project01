@@ -32,12 +32,6 @@ int vazia(Agenda *l){
 
 int main(){
 
-  char *nome = (char *)malloc(100*sizeof(char));
-  char *telefone = (char *)malloc(10*sizeof(char));
-  unsigned int cep;
-  char *data = (char *)malloc(10*sizeof(char));
-  char *nome_remover;
-
   Agenda *l = (Agenda *)malloc(sizeof(Agenda));
   if(!l){ // verifica se tem memória
     printf("Sem memória disponível!\n");
