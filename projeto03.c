@@ -17,49 +17,66 @@ typedef struct {
 Agenda *lista_vazia(void){
   return NULL;
 }
-Agenda *inserir_inicio(Agenda *l){//, char *nome, char *telefone, unsigned int cep, char *data){
+Agenda *inserir_inicio(Agenda *l){
   Agenda *novo = (Agenda*)malloc(sizeof(Agenda));
 
-  char *nome = (char *)malloc(101*sizeof(char));
-  //char nome[101];
-  char *telefone = (char *)malloc(10*sizeof(char));
+  char nome[101];
+  char telefone[11];
+  char endereco[101];
   unsigned int cep;
-  char *data = (char *)malloc(10*sizeof(char));
+  char dataNascimento[11];
 
   printf(" -----------------------------\n");
   printf("|        novo registro       |\n");
   printf(" -----------------------------\n");
   printf("1 - Inserir contato\n\n");
   printf("Digite o nome:  ");
-  getchar();
-  //fgets(nome, sizeof(nome), stdin);
+  //getchar();
   scanf("%[^\n]", nome);
-  //printf("%s", nome);
   printf("Numero de telefone:  ");
   scanf("%s", telefone);
+  //printf("TELEFONE %s",telefone);
+  fflush ( stdin );
+  printf("Endereco:  ");
+  getchar();
+  scanf("%[^\n]", endereco);
   printf("CEP:  ");
   scanf("%d", &cep);
-  printf("Data de aniversario:  ");
-  scanf("%s", data);
+  printf("Data de nascimento:  ");
+  scanf("%s", dataNascimento);
+  printf("DATA %s",dataNascimento);
+  //printf("das/dsa/dsad\n");
 
-
-  novo->nome_completo[101]=nome;
-  novo->celular[14]=telefone;
+  strcpy(novo->nome_completo,nome);
+  strcpy(novo->celular,telefone);
+  strcpy(novo->endereco,endereco);
   novo->cep=cep;
-  novo->data_nascimento[40]=data;
+  strcpy(novo->data_nascimento,dataNascimento);
+  printf("novo data %s\n",novo->data_nascimento );
   novo->proximo = l;
+
+  printf("\n_____Contato adicionado_____\n\n\n");
 
   return novo;
 }
+
 void imprimir_lista(Agenda *l){
   Agenda *ag;
   if(l==NULL)
     printf("VAZIA\n");
+  else
+    printf("\n\nVisualizar registros:\n");
   for(ag=l; ag!=NULL; ag=ag->proximo){
-    printf("Nome: %s",ag->celular);
+    printf("Nome: %s\n", ag->nome_completo);
+		printf("Celular: %s\n", ag->celular);
+		printf("Endereco: %s\n", ag->endereco);
+		printf("CEP: %d\n", ag->cep);
+		printf("DATA DE NASCIMENTO: %s\n", ag->data_nascimento);
 
   }
+  printf("\n\n\n");
 }
+
 
 
 int main () {
