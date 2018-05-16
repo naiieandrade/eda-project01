@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct {
 
     char nome_completo[101];
     char celular[14];
     unsigned int cep;
+    char endereco[40];
     char data_nascimento[11];  
     struct Agenda *proximo;
     struct Agenda *anterior;
@@ -18,6 +20,7 @@ int main () {
 	int qtdeDolar = 0;
 	char caracteres;
 	int total = 0;
+	char nome[100];
 
 	FILE *file;
 	
@@ -49,28 +52,22 @@ int main () {
 
 	for(int aux = 0; aux < total; aux ++) {
 
-		fscanf(file,"%s^\n %s %d %s", agenda[aux].nome_completo, agenda[aux].celular,
-									  &agenda[aux].cep, agenda[aux].data_nascimento);
+		fscanf(file, "%[^\n]\n %[^\n]\n %[^\n]\n %d\n %[^\n]\n", 
+			agenda[aux].nome_completo, 
+			agenda[aux].celular, 
+			agenda[aux].endereco,
+			&agenda[aux].cep,
+			agenda[aux].data_nascimento);
 	}
 
 	for(int aux = 0; aux < total; aux ++) {
 
-		printf("%s\n", agenda[aux].celular);
+		printf("Nome: %s\n", agenda[aux].nome_completo);
+		printf("Celular: %s\n", agenda[aux].celular);
+		printf("Endereco: %s\n", agenda[aux].endereco);
+		printf("CEP: %d\n", agenda[aux].cep);
+		printf("DATA DE NASCIMENTO: %s\n", agenda[aux].data_nascimento);
 	}
-
-	// for(int aux = 0; aux < qtdeLinhas; aux++) {
-
-	// 	fscanf(file, "%s^\n %s %d %s", agenda[aux].nome_completo, agenda[aux].celular, &agenda[aux].cep, agenda[aux].data_nascimento);
-	// }
-
-	//  for(int aux = 0; aux < qtdeLinhas; aux ++) {
-
-	//  	printf("%s\n", agenda[aux].nome_completo);
-	//  }
-
-	//printf("%d\n", qtdeLinhas);
-	// scanf("%d", &agenda.cep);
-	// printf("%d\n", agenda.cep);
 	
 	return 0;
 }
