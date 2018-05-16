@@ -19,8 +19,7 @@ int main () {
 	int qtdeLinhas = 0;
 	int qtdeDolar = 0;
 	char caracteres;
-	int total = 0;
-	char nome[100];
+	char lixo[1];
 
 	FILE *file;
 	
@@ -44,30 +43,27 @@ int main () {
 
 	rewind(file); 
 
-	Agenda agenda[6];
-	printf("%d\n", qtdeLinhas);
-	printf("%d\n", qtdeDolar);
-	
-	total = qtdeLinhas/qtdeDolar;
+	Agenda agenda[qtdeLinhas];
 
-	for(int aux = 0; aux < total; aux ++) {
+	for(int aux = 0; aux < qtdeLinhas; aux ++) {
 
-		fscanf(file, "%[^\n]\n %[^\n]\n %[^\n]\n %d\n %[^\n]\n", 
+		fscanf(file, "%[^\n]\n %[^\n]\n %[^\n]\n %d\n %[^\n]\n %[^\n]\n", 
 			agenda[aux].nome_completo, 
 			agenda[aux].celular, 
 			agenda[aux].endereco,
 			&agenda[aux].cep,
-			agenda[aux].data_nascimento);
+			agenda[aux].data_nascimento,
+			lixo);
 	}
 
-	for(int aux = 0; aux < total; aux ++) {
+	//for(int aux = 0; aux < total; aux ++) {
 
-		printf("Nome: %s\n", agenda[aux].nome_completo);
-		printf("Celular: %s\n", agenda[aux].celular);
-		printf("Endereco: %s\n", agenda[aux].endereco);
-		printf("CEP: %d\n", agenda[aux].cep);
-		printf("DATA DE NASCIMENTO: %s\n", agenda[aux].data_nascimento);
-	}
+		printf("Nome: %s\n", agenda[2].nome_completo);
+		printf("Celular: %s\n", agenda[2].celular);
+		printf("Endereco: %s\n", agenda[2].endereco);
+		printf("CEP: %d\n", agenda[2].cep);
+		printf("DATA DE NASCIMENTO: %s\n", agenda[2].data_nascimento);
+	//}
 	
 	return 0;
 }
