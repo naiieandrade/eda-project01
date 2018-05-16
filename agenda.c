@@ -53,9 +53,62 @@ char *mascaraData(char dataKa[]){
   strcpy(dataKa, aux);
   return dataKa;
 }
+void ler_arquivo(){
+  char arquivo [] = "contatos.txt";
+	int qtdeLinhas = 0;
+	int qtdeDolar = 0;
+	char caracteres;
+	char lixo[1];
+
+	FILE *file;
+	
+	file = fopen(arquivo, "r");
+
+  	if(file==NULL){
+	    
+	    printf("Falha!\n");
+	} else {
+
+		while((caracteres=fgetc(file))!=EOF){
+	      	
+	      	if(caracteres=='\n'){
+	        
+	        	qtdeLinhas++;
+	        } if(caracteres=='$') {
+	        	qtdeDolar++;
+	        }
+	    }		
+	}
+
+	rewind(file); 
+
+	Agenda agenda[qtdeLinhas];
+
+	for(int aux = 0; aux < qtdeLinhas; aux ++) {
+
+		fscanf(file, "%[^\n]\n %[^\n]\n %[^\n]\n %d\n %[^\n]\n %[^\n]\n", 
+			agenda[aux].nome, 
+			agenda[aux].telefone, 
+			agenda[aux].endereco,
+			&agenda[aux].cep,
+			agenda[aux].data,
+			lixo);
+      //arquivo_lista(l,agenda[aux].nome,agenda[aux].telefone,agenda[aux].endereco,agenda[aux].cep,agenda[aux].data)
+	}
+
+	//for(int aux = 0; aux < total; aux ++) {
+    
+		printf("Nome: %s\n", agenda[2].nome);
+		printf("Celular: %s\n", agenda[2].telefone);
+		printf("Endereco: %s\n", agenda[2].endereco);
+		printf("CEP: %d\n", agenda[2].cep);
+		printf("DATA DE NASCIMENTO: %s\n", agenda[2].data);
+  
+
+}
 
 int main(){
-
+  ler_arquivo();
   Agenda *l = (Agenda *)malloc(sizeof(Agenda));
   if(!l){ // verifica se tem memória
     printf("Sem memória disponível!\n");
@@ -116,6 +169,21 @@ int menu(){
 Agenda *inicializa(void){
   return NULL;
 }
+//método de ler do arquivo e trasnformar em lista
+/*
+Agenda *arquivo_lista(Agenda *l,char nome,char telefone,char endereco,unsigned int cep,char data){
+  Agenda *novo = (Agenda*)malloc(sizeof(Agenda));
+  strcpy(novo->nome,nome);
+  strcpy(novo->telefone,mascaraTelefone(telefone,MTELEFONE));
+  strcpy(novo->endereco,endereco);
+  novo->cep=cep;
+  strcpy(novo->data,mascaraData(data));
+  printf("novo data %s\n",novo->data );
+  novo->prox = l;
+  return novo;
+
+}
+*/
 
 //insere
 Agenda *insere(Agenda *l){
