@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #define CODIGO_AVIAO 7
 
 struct aviao {
@@ -23,6 +24,7 @@ Aviao *insere_na_lista (Aviao *aviao, char codigo_aviao[CODIGO_AVIAO]) {
 	novo = (Aviao*) malloc(sizeof(Aviao));
 	strcpy(novo->codigo,codigo_aviao); 
 	novo->prox = aviao;
+
 	return novo;
 }
 
@@ -61,11 +63,11 @@ Aviao *ler_e_insere_na_lista () {
 		fscanf(file, "%[^\n]\n", codigo);
 		
 		novo = insere_na_lista(novo,codigo);
-	}				
+	}
+
+	fclose(file);				
 	return novo;
 }
-
-
 
 void imprime(Aviao *aviao){
 
@@ -87,9 +89,21 @@ void imprime(Aviao *aviao){
     printf("\n\n\n");
 }
 
+int gerar_numero(int lim_inf, int lim_sup){
+	
+	return (lim_inf + (rand() % lim_sup));
+}
+
 int main () {
 
-	Aviao *voos = (Aviao *)malloc(sizeof(Aviao));
+	int nVoos = 0,nAproximacoes = 0,nDecolagens = 0,combaA = 0;
+
+	nAproximacoes = gerar_numero(10,32);
+	nDecolagens = gerar_numero(10,32);
+	combaA = gerar_numero(0,12);
+	nVoos = nAproximacoes + nDecolagens;
+
+	/*Aviao *voos = (Aviao *)malloc(sizeof(Aviao));
 
 	if(!voos){
 
@@ -100,5 +114,14 @@ int main () {
     	voos = inicializa_lista();
     	voos = ler_e_insere_na_lista();
     	imprime(voos);
-    }
+    }*/
+
+    srand(time(NULL));
+	
+	printf("Numero de voos: %d\n", nVoos);
+	printf("Numero de aproximações: %d\n", nAproximacoes);
+	printf("Numero de decolagens: %d\n", nDecolagens);
+	printf("Numero combaA: %d\n", combaA);
+
+    printf("HORA: %s\n",__TIME__);
 }
