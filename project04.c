@@ -6,6 +6,137 @@
 #define CODIGO_AVIAO 7
 
 struct aviao {
+ 	
+ 	char codigo[CODIGO_AVIAO];
+ 	int combustivel;
+ 	struct aviao* prox;
+};
+typedef struct aviao Aviao;
+
+struct fila {
+ 	
+ 	Aviao* inicio;
+ 	Aviao* final;
+};
+typedef struct fila Fila;
+
+Fila* cria ();
+void push (Fila* fila, char codigo[CODIGO_AVIAO],int combustivel);
+char pop (Fila* fila);
+int vazia (Fila* fila);
+void libera (Fila* fila);
+
+Fila* cria () {
+ 
+ 	Fila* fila = (Fila*) malloc(sizeof(Fila));
+ 	fila->inicio = fila->final = NULL;
+ 	
+ 	return fila;
+}
+
+Aviao* ins_fim (Aviao* final, char codigo[CODIGO_AVIAO],int combustivel) {
+ 
+ 	Aviao* novo = (Aviao*) malloc(sizeof(Aviao));
+ 	
+ 	strcpy(novo->codigo,codigo);
+ 	novo->combustivel = combustivel;
+ 	novo->prox = NULL;
+ 	
+ 	if (final != NULL) { 
+ 		
+ 		final->prox = novo;
+ 	}
+
+ 	return novo;
+}
+
+Aviao* retira_inicio (Aviao* inicio) {
+ 	
+ 	Aviao* aviao = inicio->prox;
+ 	
+ 	free(inicio);
+ 	
+ 	return aviao;
+}
+
+void push (Fila* fila, char codigo[CODIGO_AVIAO],int combustivel) {
+ 
+ 	fila->final = ins_fim(fila->final,codigo,combustivel);
+ 
+ 	if (fila->inicio == NULL) {
+
+ 		fila->inicio = fila->final;
+	}
+}
+
+char pop (Fila* fila) {
+
+ 	float v;
+ 	char retirado;
+ 	
+ 	if (vazia(fila)) {
+ 		
+ 		printf("Fila vazia.\n");
+ 		exit(1); 
+ 	}
+
+ //v = f->ini->info;
+ 	fila->inicio = retira_inicio(fila->inicio);
+ 	
+ 	if (fila->inicio == NULL) { 
+ 		
+ 		fila->final = NULL;
+ 	}
+
+ 	return retirado;
+}
+
+int vazia (Fila* fila) {
+ 	
+ 	return (fila->inicio == NULL);
+}
+
+void libera (Fila* fila) {
+ 
+ 	Aviao* aviao = fila->inicio;
+ 	
+ 	while (aviao != NULL) {
+ 		
+ 		Aviao* t = aviao->prox;
+ 		free(aviao);
+ 		aviao = t;
+ 	}
+
+ 	free(fila);
+}
+
+void imprime (Fila* fila) {
+ 	
+ 	Aviao* aviao;
+ 	
+ 	for (aviao=fila->inicio; aviao!= NULL; aviao=aviao->prox){
+ 		
+ 		printf("Nome: %s\n", aviao->codigo);
+ 		printf("Combustivel: %d\n", aviao->combustivel);
+	}
+}
+
+int main () {
+
+ 	Fila* fila = cria();
+ 	push(fila,"Victor",42);
+ 	push(fila,"Isabela",42);
+ 	push(fila,"Naruto",42);
+ 	push(fila,"teste",42);
+
+ 	printf("Fila:\n");
+ 	imprime(fila);
+ 	libera(fila);
+ 	
+ 	return 0;
+}
+
+/*struct aviao {
 
     char codigo[CODIGO_AVIAO];
     int combustivel;
@@ -13,28 +144,93 @@ struct aviao {
 };
 typedef struct aviao Aviao;
 
-struct pista_de_decolagem {
+struct fila {
 
 	struct Aviao *inicio;
 	struct Aviao *final;
 };
-typedef struct pista_de_decolagem Pista_de_decolagem;
+typedef struct fila Fila;
 
-Aviao *inicializa_lista (void){
+Fila* cria () {
+	
+	Fila* novo = (Fila*) malloc(sizeof(Fila));
+ 	
+ 	novo->inicio = novo->final = NULL;
+ 	
+ 	return novo;
+}
+
+Aviao* insere_inicio(Aviao *aviao,char codigo_aviao[CODIGO_AVIAO],int combustivelA) {
+
+	Aviao *novo = (Aviao*) malloc(sizeof(Aviao));
+
+	strcpy(novo->codigo,codigo_aviao);
+	novo->combustivel = combustivelA;
+
+	novo->prox = NULL;
+
+	if(aviao != NULL) {
+		aviao->prox = novo;
+	}
+
+	return novo;
+}
+
+Aviao* retira_inicio(Aviao *aviao) {
+
+	Aviao *retira = aviao->prox;
+	free(aviao);
+
+	return retira;
+}
+
+void insere (Fila* f, char codigo_aviao[CODIGO_AVIAO],int combustivelA) {
+ f->final = insere_inicio(f->final,codigo_aviao,combustivelA);
+ if (f->inicio==NULL) /* fila antes vazia? 
+ f->inicio = f->final;
+}
+
+/*Aviao *inicializa_lista(){
   
     return NULL;
 }
 
-Aviao *insere_na_lista (Aviao *aviao, char codigo_aviao[CODIGO_AVIAO],int combustivelA) {
+Pista_de_decolagem *cria() {
 
-	Aviao *novo;
+	Pista_de_decolagem *pista_de_decolagem = (Pista_de_decolagem*) malloc(sizeof(Pista_de_decolagem));
 
-	novo = (Aviao*) malloc(sizeof(Aviao));
+	pista_de_decolagem->inicio = pista_de_decolagem->final = NULL;
+
+	return pista_de_decolagem;
+}
+
+Aviao *insere_inicio(Aviao *aviao,char codigo_aviao[CODIGO_AVIAO],int combustivelA) {
+
+	Aviao *novo = (Aviao*) malloc(sizeof(Aviao));
+
 	strcpy(novo->codigo,codigo_aviao);
-	novo->combustivel = combustivelA; 
-	novo->prox = aviao;
+	novo->combustivel = combustivelA;
+
+	novo->prox = NULL;
+
+	if(aviao != NULL) {
+		aviao->prox = novo;
+	}
 
 	return novo;
+}
+
+Aviao *retira_inicio(Aviao *aviao) {
+
+	Aviao *retira = aviao->prox;
+	free(aviao);
+
+	return retira;
+}
+
+void push(Pista_de_decolagem *pista_de_decolagem,char codigo_aviao[CODIGO_AVIAO],int combustivelA) {
+
+	pista_de_decolagem->inicio = insere_inicio(pista_de_decolagem->final,codigo_aviao,combustivelA);
 }
 
 void imprime(Aviao *aviao){
@@ -119,15 +315,15 @@ int main () {
 			fscanf(file, "%[^\n]\n", codigo);
 			
 			combustivelA = gerar_numero(0,12);
-			voos = insere_na_lista(voos,codigo,combustivelA);
-		}    	
-
-    	imprime(voos);
+			//push(voos,codigo,combustivelA);
+		}    		
     }
 
+    imprime(voos);
 	fclose(file);
 
-	nAproximacoes = gerar_numero(10,32);
+
+	/*nAproximacoes = gerar_numero(10,32);
 	nDecolagens = gerar_numero(10,32);
 	combustivelA = gerar_numero(0,12);
 	nVoos = nAproximacoes + nDecolagens;
@@ -140,3 +336,8 @@ int main () {
 
     printf("HORA: %s\n",__TIME__);
 }
+
+int main () {
+
+	printf("HORA: %s\n",__TIME__);
+}*/
