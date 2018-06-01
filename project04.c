@@ -4,11 +4,14 @@
 #include <unistd.h>
 #include <time.h>
 #define CODIGO_AVIAO 7
+#define MAXIMO_DE_CARACTERES 17
 
 struct aviao {
  	
  	char codigo[CODIGO_AVIAO];
  	int combustivel;
+ 	char status[MAXIMO_DE_CARACTERES];
+ 	int numero_pista;
  	struct aviao* prox;
 };
 typedef struct aviao Aviao;
@@ -110,16 +113,29 @@ void libera (Fila* fila) {
  	free(fila);
 }
 
-void imprime (Fila* fila) {
+void imprime (Fila* fila,int nVoos,int nAproximacoes,int nDecolagens) {
  	
  	Aviao* aviao;
  	
+ 	printf("--------------------------------------------------------------------------------\n");
+ 	printf("Aeroporto Internacional de Brasília\n");
+ 	printf("Hora Inicial: %s\n",__TIME__);
+ 	printf("Fila de Pedidos: \n");
+ 	printf("NVoos: %d\n",nVoos);
+ 	printf("Naproximacoes: %d\n",nAproximacoes);
+ 	printf("NDecolagens: %d\n",nDecolagens);
+ 	printf("--------------------------------------------------------------------------------\n");
+ 	printf("Listagem de eventos\n\n");
+
  	for (aviao=fila->inicio; aviao!= NULL; aviao=aviao->prox){
  		
- 		printf("Nome: %s\n", aviao->codigo);
- 		printf("Combustivel: %d\n", aviao->combustivel);
+ 		printf("Código do voo: %s\n", aviao->codigo);
+ 		printf("Status: \n");
+ 		printf("Horário do início do procedimento: \n");
+ 		printf("Número da pista: \n\n");
 	}
 }
+
 
 int gerar_numero(int lim_inf, int lim_sup){
 	
@@ -138,14 +154,17 @@ int main () {
  	Fila* fila = cria();
 
  	int nVoos = 0,nAproximacoes = 0,nDecolagens = 0,combustivelA = 0;
-	int uniTempo = 5;
-
-    srand(time(0));
-
+	int tempo = 5;
+	srand(time(0));
 	char codigo[CODIGO_AVIAO];
 	char arquivo [] = "codigo_de_voos.txt";
 	int qtdeLinhas = 0;
 	char caracteres;
+
+	nAproximacoes = gerar_numero(10,32);
+	nDecolagens = gerar_numero(10,32);
+	combustivelA = gerar_numero(0,12);
+	nVoos = nAproximacoes + nDecolagens;
 
 	FILE *file;
 	
@@ -156,45 +175,18 @@ int main () {
 	    printf("Falha!\n");
 	} else {
 
-		while((caracteres=fgetc(file))!=EOF){
-	      	
-	      	if(caracteres=='\n'){
-	        
-	        	qtdeLinhas++;
-	        } 
-	    }		
+		for(int aux = 0; aux < nVoos; aux ++) {
+
+			fscanf(file, "%[^\n]\n", codigo);
+				
+			combustivelA = gerar_numero(0,12);
+			push(fila,codigo,combustivelA);
+		}		
 	}
-
-	qtdeLinhas +=1;
-
-	rewind(file);
-    	
-	for(int aux = 0; aux < qtdeLinhas; aux ++) {
-
-		fscanf(file, "%[^\n]\n", codigo);
-			
-		combustivelA = gerar_numero(0,12);
-		push(fila,codigo,combustivelA);
-	}    		
     
 	fclose(file);
 
-	nAproximacoes = gerar_numero(10,32);
-	nDecolagens = gerar_numero(10,32);
-	combustivelA = gerar_numero(0,12);
-	nVoos = nAproximacoes + nDecolagens;
- 
-	printf("\n");	
-	printf("Numero de voos: %d\n", nVoos);
-	printf("Numero de aproximações: %d\n", nAproximacoes);
-	printf("Numero de decolagens: %d\n", nDecolagens);
-	printf("Numero combaA: %d\n", combustivelA);
-
-    printf("HORA: %s\n",__TIME__);
-
-
- 	printf("Fila:\n");
- 	imprime(fila);
+ 	imprime(fila,nVoos,nAproximacoes,nDecolagens);
  	libera(fila);
  	
  	return 0;
