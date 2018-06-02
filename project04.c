@@ -25,7 +25,6 @@ typedef struct fila Fila;
 
 Fila* cria ();
 void push (Fila* fila, char codigo[CODIGO_AVIAO],int combustivel);
-char pop (Fila* fila);
 int vazia (Fila* fila);
 void libera (Fila* fila);
 
@@ -72,10 +71,9 @@ void push (Fila* fila, char codigo[CODIGO_AVIAO],int combustivel) {
 	}
 }
 
-char pop (Fila* fila) {
+void pop (Fila* fila) {
 
- 	float v;
- 	char retirado;
+ 	char codigo_aviao[CODIGO_AVIAO];
  	
  	if (vazia(fila)) {
  		
@@ -83,15 +81,14 @@ char pop (Fila* fila) {
  		exit(1); 
  	}
 
- //v = f->ini->info;
+ 	strcpy(codigo_aviao,fila->inicio->codigo);
+
  	fila->inicio = retira_inicio(fila->inicio);
  	
  	if (fila->inicio == NULL) { 
  		
  		fila->final = NULL;
  	}
-
- 	return retirado;
 }
 
 int vazia (Fila* fila) {
