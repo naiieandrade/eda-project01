@@ -220,7 +220,8 @@ void libera (Pista_Normal* pista_normal,Pista_Emergencia* pista_emergencia) {
 void imprime (Pista_Normal* pista_normal,Pista_Emergencia* pista_emergencia,int nVoos,int nAproximacoes,int nDecolagens) {
  	
  	Aviao* aviao_pista_normal;
- 	Aviao* aviao_pista_decolagem;
+ 	Aviao* aviao_pista_emergencia;
+ 	int pista = 0; 	
  	
  	printf("--------------------------------------------------------------------------------\n");
  	printf("Aeroporto Internacional de Brasília\n");
@@ -232,29 +233,27 @@ void imprime (Pista_Normal* pista_normal,Pista_Emergencia* pista_emergencia,int 
  	printf("--------------------------------------------------------------------------------\n");
  	printf("Listagem de eventos\n\n");
 
- 	printf("Fila prioritária!\n");
- }
- 	/* Emergênciais 
- 	for (aviao_pista_decolagem=pista_decolagem->inicio; aviao_pista_decolagem!= NULL; aviao_pista_decolagem=aviao_pista_decolagem->prox){
+ 	//printf("FILA PRIORITARIA!\n"); /* TIRAR ESSE PRINT DAQUI */
+ 	/*for (aviao_pista_emergencia=pista_emergencia->inicio; aviao_pista_emergencia!= NULL; aviao_pista_emergencia=aviao_pista_emergencia->prox){
  		
- 		printf("Código do voo: %s\n", aviao_pista_decolagem->codigo);
+ 		printf("Código do voo: %s\n", aviao_pista_emergencia->codigo);
  		printf("Status: \n");
  		printf("Horário do início do procedimento: \n");
- 		printf("Número da pista: \n");
-	}
+ 		printf("Número da pista: \n\n");
+	}*/
 
-	printf("Fila suave\n");
- 	/* Pista normal 
+ 	printf("FILA NORMAL!\n");  /* TIRAR ESSE PRINT DAQUI */
+ 	 
  	for (aviao_pista_normal=pista_normal->inicio; aviao_pista_normal!= NULL; aviao_pista_normal=aviao_pista_normal->prox){
  		
+ 		pista = gerar_numero(1,2);	
  		printf("Código do voo: %s\n", aviao_pista_normal->codigo);
  		printf("Status: \n");
  		printf("Horário do início do procedimento: \n");
- 		printf("Número da pista: \n");
- 		printf("Combustível: %d\n\n", aviao_pista_normal->combustivel);
+ 		printf("Número da pista: %d \n\n",pista);
 	}
-}
-*/
+ }
+
 int main () {
 
 	int continua = 0;
@@ -262,16 +261,17 @@ int main () {
 	srand(time(0));
 	char codigo[CODIGO_AVIAO];
 	char arquivo [] = "codigo_de_voos.txt";
-	char caracteres;
+	int contador = 0;
 
-	//Pista_Normal* pista_normal = cria_pista_normal();
-	//Pista_Decolagem* pista_decolagem = cria_pista_decolagem();
+	Pista_Normal* pista_normal = cria_pista_normal();
+	Pista_Emergencia* pista_emergencia = cria_pista_emergencia();
 
 	nAproximacoes = gerar_numero(10,32);
 	nDecolagens = gerar_numero(10,32);
-	combustivelA = gerar_numero(0,12);
+	
 	nVoos = nAproximacoes + nDecolagens;
 	printf("Número de decolagens: %d\n", nDecolagens);
+	printf("Numero de aproximacoes: %d\n", nAproximacoes);
 
 	FILE *file;
 	
@@ -286,14 +286,18 @@ int main () {
 
 			fscanf(file, "%[^\n]\n", codigo);
 				
-			//combustivelA = gerar_numero(0,12);
-			//push_decolagem(pista_decolagem,codigo);
+			combustivelA = gerar_numero(0,12);
+			verifica(pista_normal,pista_emergencia,combustivelA,codigo,"D");
+		}
+		/* ARRUMAR O FOR DEBAIXO */
+		for(int aux = nDecolagens; aux < nAproximacoes; aux ++) {
+			printf("vamo\n");
 		}		
 	}
 
 	fclose(file);
 
-	//imprime(pista_normal,pista_decolagem,nVoos,nAproximacoes,nDecolagens);
+	imprime(pista_normal,pista_emergencia,nVoos,nAproximacoes,nDecolagens);
 
 	/*do {
 
