@@ -165,7 +165,7 @@ void imprime (Fila* fila,int nVoos,int nAproximacoes,int nDecolagens) {
 	int contador_critico = 0;
 	int hora_atual = 0;
 	int minuto_atual = 0;
-	int contador_de_hora = 0;
+	int contador_de_pista = 0;
 
 	now = time(NULL);
 	now_tm = localtime(&now);
@@ -180,35 +180,55 @@ void imprime (Fila* fila,int nVoos,int nAproximacoes,int nDecolagens) {
  	printf("--------------------------------------------------------------------------------\n");
  	printf("Listagem de eventos\n\n");
 
- 	for (aviao=fila->inicio; aviao!= NULL; aviao=aviao->prox){
+ 	for (aviao=fila->inicio; aviao!= NULL; aviao=aviao->prox) {
 	    
 	    now_tm=add_unidade_de_tempo(now_tm, 1);
 	    hora_atual = now_tm->tm_hour;
 	    minuto_atual = now_tm->tm_min;
 
-	    numero_pista = gerar_numero(1,2);
+	    if (strcmp(aviao->tipo_de_operacao,"D") == 0) {
+	    		
+    		numero_pista = gerar_numero(1,3);
+    		printf("Código do voo: %s\n", aviao->codigo);
+			printf("Status: [aeronave decolou]\n");
+			printf("Horário do início do procedimento: %d:%d \n", hora_atual, minuto_atual);
+			printf("Número da pista: %d\n\n", numero_pista);
+
+			if(numero_pista == 3) {
+
+				contador_de_pista ++;
+			}
+    	} else {
+	    		
+    		numero_pista = gerar_numero(1,2);
+    		printf("Código do voo: %s\n", aviao->codigo);
+			printf("Status: [aeronave pousou]\n");
+			printf("Horário do início do procedimento: %d:%d \n", hora_atual, minuto_atual);
+			printf("Número da pista: %d\n\n", numero_pista);
+    	} 
 
 	    if (aviao->combustivel == 0) {
 
+	    	numero_pista = gerar_numero(1,3);
+
+	    	if(numero_pista == 3) {
+
+	    		contador_de_pista ++;
+	    	}
+
 	    	contador_critico ++;
-
-	    	/*ARRUMAR ESSA LOGICA */
-	    	/*if((hora_atual == hora_atual) && minuto_atual == minuto_atual) {
-
-	    		contador_de_hora ++;
-	    	}*/
 
 	    	if (contador_critico == 3) {
 
 	    		printf("ALERTA GERAL DE DESVIO DE AERONAVE\n\n");
 
-	    		/*MELHORAR ESSA LOGICA 
-	    		if (contador_de_hora == 3) {
+	    		contador_critico = 0;
+
+	    		if(contador_de_pista == 3) {
 
 	    			printf("ALERTA CRÍTICO, AERONAVE IRÁ CAIR\n\n");
 	    			pop(fila);
-	    		}*/
-	    		
+	    		}	    		
 	    	} else {
 
 	    		printf("Código do voo: %s\n", aviao->codigo);
@@ -216,26 +236,11 @@ void imprime (Fila* fila,int nVoos,int nAproximacoes,int nDecolagens) {
  				printf("Horário do início do procedimento: %d:%d \n", hora_atual, minuto_atual);
  				printf("Número da pista: %d\n\n", numero_pista);
 	    	}	    	
-	    } else {
+	    }
 
-	    	if (strcmp(aviao->tipo_de_operacao,"D") == 0) {
-	    		
-	    		printf("Código do voo: %s\n", aviao->codigo);
- 				printf("Status: [aeronave decolou]\n");
- 				printf("Horário do início do procedimento: %d:%d \n", hora_atual, minuto_atual);
- 				printf("Número da pista: %d\n\n", numero_pista);
-	    	} else {
-	    		
-	    		printf("Código do voo: %s\n", aviao->codigo);
- 				printf("Status: [aeronave pousou]\n");
- 				printf("Horário do início do procedimento: %d:%d \n", hora_atual, minuto_atual);
- 				printf("Número da pista: %d\n\n", numero_pista);
-	    	}
-	    	
-	    	printf("Código do voo: %s\n", aviao->codigo);
- 			printf("Status: \n");
- 			printf("Horário do início do procedimento: %d:%d \n", hora_atual, minuto_atual);
- 			printf("Número da pista: %d\n\n", numero_pista);
+	    if (contador_de_pista == 3) {
+
+	    	contador_de_pista = 0;
 	    }
 	}
 }
