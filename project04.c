@@ -158,6 +158,7 @@ int gerar_numero_char(int numero) {
 void imprime (Fila* fila,int nVoos,int nAproximacoes,int nDecolagens) {
 
  	Aviao* aviao;
+ 	char procedimento[TIPO_DE_OPERACAO];
 	time_t now;
 	struct tm *now_tm;
 	int numero_pista = 0;
@@ -191,30 +192,46 @@ void imprime (Fila* fila,int nVoos,int nAproximacoes,int nDecolagens) {
 
 	    	contador_critico ++;
 
-	    	if((hora_atual == hora_atual) && minuto_atual == minuto_atual) {
+	    	/*ARRUMAR ESSA LOGICA */
+	    	/*if((hora_atual == hora_atual) && minuto_atual == minuto_atual) {
 
 	    		contador_de_hora ++;
-	    	}
+	    	}*/
 
 	    	if (contador_critico == 3) {
 
 	    		printf("ALERTA GERAL DE DESVIO DE AERONAVE\n\n");
 
+	    		/*MELHORAR ESSA LOGICA 
 	    		if (contador_de_hora == 3) {
 
 	    			printf("ALERTA CRÍTICO, AERONAVE IRÁ CAIR\n\n");
 	    			pop(fila);
-	    		}
+	    		}*/
 	    		
 	    	} else {
 
 	    		printf("Código do voo: %s\n", aviao->codigo);
- 				printf("Status: VAI CAIR ESSA PORRA\n");
+ 				printf("Status: [aeronave pousou]\n");
  				printf("Horário do início do procedimento: %d:%d \n", hora_atual, minuto_atual);
  				printf("Número da pista: %d\n\n", numero_pista);
 	    	}	    	
 	    } else {
 
+	    	if (strcmp(aviao->tipo_de_operacao,"D") == 0) {
+	    		
+	    		printf("Código do voo: %s\n", aviao->codigo);
+ 				printf("Status: [aeronave decolou]\n");
+ 				printf("Horário do início do procedimento: %d:%d \n", hora_atual, minuto_atual);
+ 				printf("Número da pista: %d\n\n", numero_pista);
+	    	} else {
+	    		
+	    		printf("Código do voo: %s\n", aviao->codigo);
+ 				printf("Status: [aeronave pousou]\n");
+ 				printf("Horário do início do procedimento: %d:%d \n", hora_atual, minuto_atual);
+ 				printf("Número da pista: %d\n\n", numero_pista);
+	    	}
+	    	
 	    	printf("Código do voo: %s\n", aviao->codigo);
  			printf("Status: \n");
  			printf("Horário do início do procedimento: %d:%d \n", hora_atual, minuto_atual);
@@ -228,7 +245,6 @@ int main () {
  	Fila* fila = cria();
 
  	int nVoos = 0,nAproximacoes = 0,nDecolagens = 0,combustivelA = 0;
-	int tempo = 5;
 	int numero_aleatorio = 0;
 
 	srand(time(0));
