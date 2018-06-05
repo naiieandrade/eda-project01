@@ -133,13 +133,14 @@ struct tm* add_unidade_de_tempo(struct tm *now_tm, int qnt){
   	return now_tm;
 }
 
-int gerar_numero(int lim_inf, int lim_sup){
+int gerar_numero(int limite_inferior, int limite_superior){
 
 
 	int result = 0;
 
 	for (int aux = 0; aux < 1; aux ++) {
-		result = (rand() % (lim_sup - lim_inf + 1)) + lim_inf;
+		
+		result = (rand() % (limite_superior - limite_inferior + 1)) + limite_inferior;
 	}
 
 	return result;
