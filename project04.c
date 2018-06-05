@@ -160,9 +160,11 @@ void imprime (Fila* fila,int nVoos,int nAproximacoes,int nDecolagens) {
  	Aviao* aviao;
 	time_t now;
 	struct tm *now_tm;
-	int hora = 0, minuto = 0;
 	int numero_pista = 0;
-	int contador_de_critico = 0;
+	int contador_critico = 0;
+	int hora_atual = 0;
+	int minuto_atual = 0;
+	int contador_de_hora = 0;
 
 	now = time(NULL);
 	now_tm = localtime(&now);
@@ -180,31 +182,42 @@ void imprime (Fila* fila,int nVoos,int nAproximacoes,int nDecolagens) {
  	for (aviao=fila->inicio; aviao!= NULL; aviao=aviao->prox){
 	    
 	    now_tm=add_unidade_de_tempo(now_tm, 1);
-	    hora = now_tm->tm_hour;
-	    minuto = now_tm->tm_min;
+	    hora_atual = now_tm->tm_hour;
+	    minuto_atual = now_tm->tm_min;
 
 	    numero_pista = gerar_numero(1,2);
 
 	    if (aviao->combustivel == 0) {
 
-	    	contador_de_critico ++;
+	    	contador_critico ++;
 
-	    	if (contador_de_critico == 3) {
+	    	if((hora_atual == hora_atual) && minuto_atual == minuto_atual) {
 
-	    		printf("ALERTA CRÍTICO, AERONAVE IRÁ CAIR\n\n");
-	    		pop(fila);
+	    		contador_de_hora ++;
+	    	}
+
+	    	if (contador_critico == 3) {
+
+	    		printf("ALERTA GERAL DE DESVIO DE AERONAVE\n\n");
+
+	    		if (contador_de_hora == 3) {
+
+	    			printf("ALERTA CRÍTICO, AERONAVE IRÁ CAIR\n\n");
+	    			pop(fila);
+	    		}
+	    		
 	    	} else {
 
 	    		printf("Código do voo: %s\n", aviao->codigo);
  				printf("Status: VAI CAIR ESSA PORRA\n");
- 				printf("Horário do início do procedimento: %d:%d \n", hora, minuto);
+ 				printf("Horário do início do procedimento: %d:%d \n", hora_atual, minuto_atual);
  				printf("Número da pista: %d\n\n", numero_pista);
-	    	}
+	    	}	    	
 	    } else {
 
 	    	printf("Código do voo: %s\n", aviao->codigo);
  			printf("Status: \n");
- 			printf("Horário do início do procedimento: %d:%d \n", hora, minuto);
+ 			printf("Horário do início do procedimento: %d:%d \n", hora_atual, minuto_atual);
  			printf("Número da pista: %d\n\n", numero_pista);
 	    }
 	}
