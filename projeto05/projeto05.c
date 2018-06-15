@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include<string.h>
 
 typedef struct arvore {
   
@@ -8,6 +9,37 @@ typedef struct arvore {
   	struct arvore* direita; 
   	struct arvore* esquerda; 
 } Arvore;
+
+/*Necessario para fazer o showTree */
+
+struct asciinode_struct{
+
+  	asciinode * esquerda, * direita;
+
+  	/*esquerda = left, direita = right */
+  
+  	int comprimento; /*edge_lenght*/
+  	int altura; /*height*/
+  	int lablen;
+  	int parent_dir;
+  	char label[11];
+};
+typedef struct asciinode_struct asciinode;
+
+asciinode * build_ascii_tree(Arvore* arvore){
+  
+  	asciinode *node;
+  	
+  	if (arvore == NULL) {
+
+  		return NULL;	
+  	}
+
+  	node = build_ascii_tree_recursive(t);
+  	node->parent_dir = 0;
+  	
+  	return node;
+}
 
 /* Libera a arvore, destruindo seus filhos esquerdos e direitos antes */
 
@@ -178,6 +210,63 @@ int searchValue(Arvore* arvore, int valor) {
   	return arvore->valor==valor || searchValue(arvore->esquerda, valor) || searchValue(arvore->direita, valor);
 }
 
+char *escolhe_arquivos() {
+
+  	int opcao;
+  	char * arquivo;
+  	arquivo = malloc(sizeof(char)*9);
+
+  	do {
+
+  		printf("Escolha um arquivo válido [1-6]: \n");
+  		printf("1 - Arquivo bst1.txt \n");
+  		printf("2 - Arquivo bst2.txt \n");
+  		printf("3 - Arquivo bst3.txt \n");
+  		printf("4 - Arquivo bst4.txt \n");
+  		printf("5 - Arquivo bst5.txt \n");
+  		printf("6 - Arquivo bst6.txt \n");
+
+  		printf("\n\nOpção: ");
+  		scanf("%d",&opcao);
+
+  	} while(opcao < 1 || opcao > 6);
+  	
+
+    switch (opcao) {
+      	case 1:
+
+        	strcpy(arquivo,"bst1.txt");
+        break;
+      	
+      	case 2:
+        
+        	strcpy(arquivo,"bst2.txt");
+        break;
+      	
+      	case 3:
+        
+        	strcpy(arquivo,"bst3.txt");
+        break;
+      	
+      	case 4:
+        
+        	strcpy(arquivo,"bst4.txt");
+        break;
+      	
+      	case 5:
+        
+        	strcpy(arquivo,"bst5.txt");
+        break;
+      	
+      	case 6:
+        
+        	strcpy(arquivo,"bst6.txt");
+        break;
+    }
+
+  	return arquivo;
+}
+
 int menu(){
   	
   	int opt;
@@ -201,12 +290,58 @@ int menu(){
   	return opt;
 }
 
+void showTree(Arvore* arvore) {
+
+
+}
+
+void print_ascii_tree(Tree * t)
+{
+  asciinode *proot;
+  int xmin, i;
+  if (t == NULL) return;
+  proot = build_ascii_tree(t);
+  compute_edge_lengths(proot);
+  for (i=0; i<proot->height && i < MAX_HEIGHT; i++)
+  {
+    lprofile[i] = INFINITY;
+  }
+  compute_lprofile(proot, 0, 0);
+  xmin = 0;
+  for (i = 0; i < proot->height && i < MAX_HEIGHT; i++)
+  {
+    xmin = MIN(xmin, lprofile[i]);
+  }
+  for (i = 0; i < proot->height; i++)
+  {
+    print_next = 0;
+    print_level(proot, -xmin, i);
+    printf("\n");
+  }
+  if (proot->height >= MAX_HEIGHT)
+  {
+    printf("(This tree is taller than %d, and may be drawn incorrectly.)\n", MAX_HEIGHT);
+  }
+  free_ascii_tree(proot);
+}
+
 int main () {
 
 	Arvore *arvore;
+	char * arquivo; 
+	int opcao = 0;
 
-	arvore = loadTreeFromFile("bst1.txt");
-	imprime(arvore);
+	do {
 
-	
+		opcao = menu();
+
+		switch(opcao) {
+
+			case 1:
+				
+				arquivo = escolhe_arquivos();
+				loadTreeFromFile(arquivo);
+				break;
+		}
+	} while(opcao != 0);
 }
