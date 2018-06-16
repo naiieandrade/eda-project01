@@ -30,6 +30,18 @@ Arvore* loadTreeFromFile(char arquivo[]) {
     return arvore;
 }
 
+void showTree(Arvore* arvore) {
+
+    printf("Mostrar arvore:\n");
+    print_ascii_tree(arvore);
+    printf("\n\n");
+}
+
+void isFull(Arvore* arvore) {
+
+    isFullTree(arvore);
+}
+
 char *escolhe_arquivos() {
 
     int opcao;
@@ -124,9 +136,18 @@ int main () {
 
             case 1:
         
-            arquivo = escolhe_arquivos();
-            loadTreeFromFile(arquivo);
+                arquivo = escolhe_arquivos();
+                arvore = loadTreeFromFile(arquivo);
             break;
+
+            case 2:
+
+                showTree(arvore);
+            break;
+
+            case 3:
+
+                isFull(arvore);
         }
     } while(opcao != 0);
 }

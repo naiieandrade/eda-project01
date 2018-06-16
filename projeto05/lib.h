@@ -593,12 +593,16 @@ int isFullTree(Arvore* arvore) {
     }
 
     if(arvore->esquerda == NULL && arvore->direita == NULL) {
-        
+    	
+    	printf("\n\n");
+    	printf("Arvore não cheia\n");    
         return 1;
     }
 
     if((arvore->esquerda)&&(arvore->direita)) {
         
+        printf("\n\n");
+        printf("Arvore Cheia\n");
         return (isFullTree(arvore->esquerda) && isFullTree(arvore->direita));
     }
 }
