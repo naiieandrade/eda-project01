@@ -72,35 +72,32 @@ Arvore* removeValue(Arvore* arvore,int valor) {
     return arvore_removida;
 }
 
-/* Print pre-order */
-void preOrder(Arvore* arvore) {
+void printInOrder(Arvore* arvore){
+
+    if(arvore != NULL){
+    
+        printInOrder(arvore->esquerda);
+        printf("%d ", arvore->valor);
+        printInOrder(arvore->direita);
+    }
+}
+
+void printPreOrder(Arvore* arvore) {
     
     if(arvore != NULL) {
 
         printf("%d ", arvore->valor);
-        preOrder(arvore->esquerda);
-        preOrder(arvore->direita);
+        printPreOrder(arvore->esquerda);
+        printPreOrder(arvore->direita);
     }
 }
 
-/* Print in-order */
-void inOrder(Arvore* arvore){
+void printPostOrder(Arvore* arvore){
 
     if(arvore != NULL){
     
-        inOrder(arvore->esquerda);
-        printf("%d ", arvore->valor);
-        inOrder(arvore->direita);
-    }
-}
-
-/* Print post-order */
-void postOrder(Arvore* arvore){
-
-    if(arvore != NULL){
-    
-        postOrder(arvore->esquerda);
-        postOrder(arvore->direita);
+        printPostOrder(arvore->esquerda);
+        printPostOrder(arvore->direita);
         printf("%d ", arvore->valor);
     }
 }
@@ -167,6 +164,7 @@ int menu(){
     
     int opcao;
 
+    printf("\n\n");
     printf("'-----------------------------'\n");
     printf("'        Bem Vindo            '\n");
     printf("'-----------------------------'\n");
@@ -178,8 +176,8 @@ int menu(){
     printf("5. Verifica altura da arvore.\n");
     printf("6. Remover valor.\n");
     printf("7. Imprimir arvore em ordem.\n");
-    printf("8. Imprimir arvore em pre ordem.\n");
-    printf("9. Imprimir arvore em pos ordem.\n");
+    printf("8. Imprimir arvore em prá ordem.\n");
+    printf("9. Imprimir arvore em pós ordem.\n");
     printf("10. Mostrar arvore balanceada.\n");
     printf("0. Sair\n");
     printf("\n\nOpção: ");
@@ -263,7 +261,24 @@ int main () {
                 } else {
 
                     printf("\nO NÚMERO %d NÃO PERTENCE A ÁRVORE!\n\n",valor);   
-                }                
+                }
+
+            break;
+
+            case 7:
+
+                printf("Arvore em ordem\n");
+                printInOrder(arvore);
+            break;
+
+            case 8:
+
+                printPreOrder(arvore);
+            break;
+
+            case 9:
+
+                printPostOrder(arvore);
             break;
 
         }
