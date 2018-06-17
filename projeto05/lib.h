@@ -61,6 +61,14 @@ Arvore* insere(Arvore** arvore, int valor) {
     }
 }
 
+int maior(int a, int b) {
+    
+    if(a > b)
+        return a;
+    else
+        return b;
+}
+
 /* Acha a altura da arvore */
 int height(Arvore *arvore) {
     
@@ -149,8 +157,8 @@ struct asciinode_struct {
     
     asciinode * esquerda, * direita;
 
-    int comprimento; /*edge_length*/
-    int altura; /*altura */
+    int comprimento; 
+    int altura; 
     int lablen;
     int parent_dir;
     char label[11];

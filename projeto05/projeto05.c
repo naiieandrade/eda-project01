@@ -30,6 +30,17 @@ Arvore* loadTreeFromFile(char arquivo[]) {
     return arvore;
 }
 
+int getHeight(Arvore *arvore) {
+
+    if(arvore == NULL || (arvore->esquerda == NULL && arvore->direita == NULL)) {
+
+        return 0;
+    } else {
+
+        return 1 + maior(getHeight(arvore->esquerda),getHeight(arvore->direita));
+    }
+}
+
 void showTree(Arvore* arvore) {
 
     printf("Mostrar arvore:\n");
@@ -158,8 +169,8 @@ int main () {
             break;
 
             case 3:
-                //TA ZUADO!
-                //isFull(arvore);
+                
+                isFull(arvore);
             break;
 
             case 4:
@@ -172,15 +183,30 @@ int main () {
                 if(searchValue(arvore, valor)) {
 
                     //COLOCAR O NIVEL DO NÓ
+                    //MELHORAR ESSA PORRA
                     printf("\n" );
                     printf("Valor do pai: %d\n", arvore->valor);
 
+                    /*if(arvore->esquerda != NULL) {
+
+                        printf("Valor a esquerda: %d\n",arvore->esquerda);
+                    } if(arvore->direita != NULL) {
+
+                        printf("Valor a direita: %d\n", arvore->direita);
+                    }*/
+                    
                 } else {
                 
                     printf("\nO NÚMERO %d NÃO PERTENCE A ÁRVORE!\n\n",valor);
                 }
                 
             break;
+
+            case 5:
+
+                printf("Altura da árvore: %d\n", getHeight(arvore));
+            break;
+
         }
     } while(opcao != 0);
 }
