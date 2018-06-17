@@ -62,7 +62,7 @@ Arvore* insere(Arvore** arvore, int valor) {
 }
 
 int maior(int a, int b) {
-    
+
     if(a > b)
         return a;
     else
@@ -546,39 +546,6 @@ Arvore* insertBalanced(Arvore* node, int key) {
     }
 
     return node;
-}
-
-/* Print pre-order */
-void preOrder(Arvore* arvore) {
-    
-    if(arvore != NULL) {
-
-        printf("%d ", arvore->valor);
-        preOrder(arvore->esquerda);
-        preOrder(arvore->direita);
-    }
-}
-
-/* Print in-order */
-void inOrder(Arvore* arvore){
-
-    if(arvore != NULL){
-    
-        inOrder(arvore->esquerda);
-        printf("%d ", arvore->valor);
-        inOrder(arvore->direita);
-    }
-}
-
-/* Print post-order */
-void postOrder(Arvore* arvore){
-
-    if(arvore != NULL){
-    
-        postOrder(arvore->esquerda);
-        postOrder(arvore->direita);
-        printf("%d ", arvore->valor);
-    }
 }
 
 /*Verifica se a arvore esta cheia */

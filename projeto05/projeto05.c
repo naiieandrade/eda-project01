@@ -63,6 +63,48 @@ int searchValue(Arvore* arvore, int valor) {
     return arvore->valor == valor || searchValue(arvore->esquerda, valor) || searchValue(arvore->direita, valor);
 }
 
+Arvore* removeValue(Arvore* arvore,int valor) {
+
+    Arvore* arvore_removida;
+
+    arvore_removida = delete(valor,arvore);
+
+    return arvore_removida;
+}
+
+/* Print pre-order */
+void preOrder(Arvore* arvore) {
+    
+    if(arvore != NULL) {
+
+        printf("%d ", arvore->valor);
+        preOrder(arvore->esquerda);
+        preOrder(arvore->direita);
+    }
+}
+
+/* Print in-order */
+void inOrder(Arvore* arvore){
+
+    if(arvore != NULL){
+    
+        inOrder(arvore->esquerda);
+        printf("%d ", arvore->valor);
+        inOrder(arvore->direita);
+    }
+}
+
+/* Print post-order */
+void postOrder(Arvore* arvore){
+
+    if(arvore != NULL){
+    
+        postOrder(arvore->esquerda);
+        postOrder(arvore->direita);
+        printf("%d ", arvore->valor);
+    }
+}
+
 char *escolhe_arquivos() {
 
     int opcao;
@@ -86,6 +128,7 @@ char *escolhe_arquivos() {
     
 
     switch (opcao) {
+
         case 1:
 
           strcpy(arquivo,"bst1.txt");
@@ -133,10 +176,11 @@ int menu(){
     printf("3. Verifica se a árvore é cheia.\n");
     printf("4. Procurar valor.\n");
     printf("5. Verifica altura da arvore.\n");
-    printf("6. Imprimir arvore em ordem.\n");
-    printf("7. Imprimir arvore em pre ordem.\n");
-    printf("8. Imprimir arvore em pos ordem.\n");
-    printf("9. Mostrar arvore balanceada.\n");
+    printf("6. Remover valor.\n");
+    printf("7. Imprimir arvore em ordem.\n");
+    printf("8. Imprimir arvore em pre ordem.\n");
+    printf("9. Imprimir arvore em pos ordem.\n");
+    printf("10. Mostrar arvore balanceada.\n");
     printf("0. Sair\n");
     printf("\n\nOpção: ");
     scanf("%d", &opcao);
@@ -205,6 +249,21 @@ int main () {
             case 5:
 
                 printf("Altura da árvore: %d\n", getHeight(arvore));
+            break;
+
+            case 6:
+
+                printf("Insira o valor que deseja remover da árvore\n");
+                scanf("%d",&valor);
+
+                if(searchValue(arvore, valor)) {
+
+                    arvore = removeValue(arvore,valor);
+
+                } else {
+
+                    printf("\nO NÚMERO %d NÃO PERTENCE A ÁRVORE!\n\n",valor);   
+                }                
             break;
 
         }
