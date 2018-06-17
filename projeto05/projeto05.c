@@ -267,18 +267,39 @@ int main () {
 
             case 7:
 
-                printf("Arvore em ordem\n");
+                printf("Árvore em ordem\n");
                 printInOrder(arvore);
             break;
 
             case 8:
 
+                printf("Árvore em pré-ordem\n");
                 printPreOrder(arvore);
             break;
 
             case 9:
 
+                printf("Árvore em pós-ordem\n");
                 printPostOrder(arvore);
+            break;
+
+            case 10:
+                /*Ta estranho isso aqui, uma hora funciona o balanceamento, outra hora não*/
+                if (getBalance(arvore) <= 1) {
+
+                    printf("A árvore já está balanceada\n");
+                } else {
+
+                    printf("Insira o valor médio para balancear a árvore\n");
+                    scanf("%d", &valor);
+                    /*Ta quebrando aqui*/
+                    arvore = insertBalanced(arvore,valor);
+                }
+            break;
+
+            case 0:
+
+                libera(arvore);
             break;
 
         }

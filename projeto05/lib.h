@@ -279,7 +279,6 @@ void compute_rprofile(asciinode *node, int x, int y) {
     compute_rprofile(node->direita, x+node->comprimento+1, y+node->comprimento+1);
 }
 
-/* saber a altura da arvore */
 void compute_edge_lengths(asciinode *node)  {
   
     int h, hmin, i, delta;
@@ -459,7 +458,6 @@ Arvore* newNode(int valor) {
     return(node);
 }
 
-/*Retorna se a arvore ta balanceada ou não. Verificar qual é o numero certo que tem que dar pra uma arvore balanceada */
 int getBalance(Arvore* arvore) {
     
     if (arvore == NULL) {
@@ -469,7 +467,6 @@ int getBalance(Arvore* arvore) {
     return height(arvore->esquerda) - height(arvore->direita);
 }
 
-/*Rotaciona para a direita */
 Arvore* rightRotate(Arvore* arvore) {
     
     Arvore* x = arvore->esquerda;
@@ -484,7 +481,6 @@ Arvore* rightRotate(Arvore* arvore) {
     return x;
 }
 
-/*Rotaciona para a esquerda */
 Arvore* leftRotate(Arvore* arvore) {
 
     Arvore* y = arvore->direita;
@@ -548,7 +544,6 @@ Arvore* insertBalanced(Arvore* node, int key) {
     return node;
 }
 
-/*Verifica se a arvore esta cheia */
 int isFullTree(Arvore* arvore) {
 
     if(arvore == NULL) {
