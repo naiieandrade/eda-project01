@@ -42,6 +42,16 @@ void isFull(Arvore* arvore) {
     isFullTree(arvore);
 }
 
+int searchValue(Arvore* arvore, int valor) {
+  
+    if(arvore_vazia(arvore)) {
+    
+      return 0;
+    }
+  
+    return arvore->valor == valor || searchValue(arvore->esquerda, valor) || searchValue(arvore->direita, valor);
+}
+
 char *escolhe_arquivos() {
 
     int opcao;
@@ -110,11 +120,12 @@ int menu(){
     printf("1. Carregar arquivo.\n");
     printf("2. Mostrar arvore.\n");
     printf("3. Verifica se a árvore é cheia.\n");
-    printf("4. Verifica altura da arvore.\n");
-    printf("5. Imprimir arvore em ordem.\n");
-    printf("6. Imprimir arvore em pre ordem.\n");
-    printf("7. Imprimir arvore em pos ordem.\n");
-    printf("8. Mostrar arvore balanceada.\n");
+    printf("4. Procurar valor.\n");
+    printf("5. Verifica altura da arvore.\n");
+    printf("6. Imprimir arvore em ordem.\n");
+    printf("7. Imprimir arvore em pre ordem.\n");
+    printf("8. Imprimir arvore em pos ordem.\n");
+    printf("9. Mostrar arvore balanceada.\n");
     printf("0. Sair\n");
     printf("\n\nOpção: ");
     scanf("%d", &opcao);
@@ -127,6 +138,7 @@ int main () {
     Arvore *arvore;
     char * arquivo; 
     int opcao = 0;
+    int valor = 0;
 
     do {
 
@@ -146,8 +158,29 @@ int main () {
             break;
 
             case 3:
+                //TA ZUADO!
+                //isFull(arvore);
+            break;
 
-                isFull(arvore);
+            case 4:
+
+                printf("\n\n");
+                
+                printf("Insira o valor que deseja pesquisar na árvore \n");
+                scanf("%d",&valor);
+
+                if(searchValue(arvore, valor)) {
+
+                    //COLOCAR O NIVEL DO NÓ
+                    printf("\n" );
+                    printf("Valor do pai: %d\n", arvore->valor);
+
+                } else {
+                
+                    printf("\nO NÚMERO %d NÃO PERTENCE A ÁRVORE!\n\n",valor);
+                }
+                
+            break;
         }
     } while(opcao != 0);
 }

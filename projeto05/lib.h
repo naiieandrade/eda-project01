@@ -39,17 +39,6 @@ int arvore_vazia(Arvore* arvore) {
     return arvore == NULL;
 }
 
-/* Função que verifica se um elemento pertence ou não à árvore */
-int searchValue(Arvore* arvore, int valor) {
-  
-    if(arvore_vazia(arvore)) {
-    
-      return 0;
-    }
-  
-    return arvore->valor == valor || searchValue(arvore->esquerda, valor) || searchValue(arvore->direita, valor);
-}
-
 Arvore* insere(Arvore** arvore, int valor) {
   
     if(*arvore == NULL) {
