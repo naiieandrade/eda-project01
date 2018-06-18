@@ -1,4 +1,4 @@
-#include<stdio.h>
+ #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
 #include "lib.h"
@@ -21,6 +21,7 @@ int menu(){
   printf("6. Imprimir arvore em pre ordem.\n");
   printf("7. Imprimir arvore em pos ordem.\n");
   printf("8. Mostrar arvore balanceada.\n");
+  printf("9. pesquisar\n");
   printf("0. Sair\n");
   printf("\n\nOpção: ");
   scanf("%d", &opt);
@@ -155,10 +156,66 @@ void balanceTree(Tree * rootB, int * vetor){
   printf("\n\n\n");
 
 }
-
+Tree *searchValue(Tree * root ,int key){
+	if(root != NULL) {
+		if(key == root->element) {
+			printf("Data found!\n");
+			return root;
+		}
+		else {
+			if(key < root->element)
+				return searchValue(root->left,key);
+			else
+				return searchValue(root->right,key);
+		}
+	}
+	else {
+		printf("Data not found!\n");
+		return NULL;
+	
+	}
+}Tree *searchValue(Tree * root ,int key){
+	if(root != NULL) {
+		if(key == root->element) {
+			printf("Data found!\n");
+			return root;
+		}
+		else {
+			if(key < root->element)
+				return searchValue(root->left,key);
+			else
+				return searchValue(root->right,key);
+		}
+	}
+	else {
+		printf("Data not found!\n");
+		return NULL;
+	
+	}
+}
+/*
+struct tree* search(int key,struct tree *leaf) {
+	if(leaf != NULL) {
+		if(key == leaf->data) {
+			printf("Data found!\n");
+			return leaf;
+		}
+		else {
+			if(key < leaf->data)
+				return search(key,leaf->left);
+			else
+				return search(key,leaf->right);
+		}
+	}
+	else {
+		printf("Data not found!\n");
+		return NULL;
+	}
+}*/
 
 int main(){
-
+  int search_num =100;
+  int pesquisar=0;	
   int * vetor;
   Tree * root;
   Tree * rootB;
@@ -210,6 +267,10 @@ int main(){
       case 8:
         balanceTree(rootB, vetor);
         break;
+      case 9:
+      		//scanf("%d",&search_num);
+ 			searchValue(root,search_num);
+      		
       default:
         printf("Digite uma opcao valida (: \n\n");
     }
