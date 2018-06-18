@@ -54,7 +54,7 @@ void isFull(Arvore* arvore) {
 }
 
 int searchValue(Arvore* arvore, int valor) {
-  
+
     if(arvore_vazia(arvore)) {
     
       return 0;
@@ -100,6 +100,32 @@ void printPostOrder(Arvore* arvore){
         printPostOrder(arvore->direita);
         printf("%d ", arvore->valor);
     }
+}
+
+int nivel(Arvore* arvore,int valor) {
+
+    int n = 0;
+    Arvore* atual = arvore;
+
+    while(atual->valor != valor) {
+
+        if(valor < atual->valor) {
+
+            n++;
+            atual = atual->esquerda;
+        } else {
+
+            n++;
+            atual = atual->direita;
+        }
+
+        if(atual == 0) {
+
+            return 0; //não tem filho
+        }
+    }
+
+     return n;
 }
 
 char *escolhe_arquivos() {
@@ -192,6 +218,7 @@ int main () {
     char * arquivo; 
     int opcao = 0;
     int valor = 0;
+    int esquerda = 0, direita = 0, total = 0;
 
     do {
 
@@ -224,19 +251,18 @@ int main () {
 
                 if(searchValue(arvore, valor)) {
 
-                    //COLOCAR O NIVEL DO NÓ
-                    //MELHORAR ESSA PORRA
                     printf("\n" );
                     printf("Valor do pai: %d\n", arvore->valor);
 
-                    /*if(arvore->esquerda != NULL) {
+                    if(arvore->valor == valor) {
 
-                        printf("Valor a esquerda: %d\n",arvore->esquerda);
-                    } if(arvore->direita != NULL) {
+                        total = 1;
+                        printf("Nível do nó: %d\n", total);
+                    } else {
 
-                        printf("Valor a direita: %d\n", arvore->direita);
-                    }*/
-                    
+                        printf("N: %d\n", nivel(arvore,valor));
+                    }
+                     
                 } else {
                 
                     printf("\nO NÚMERO %d NÃO PERTENCE A ÁRVORE!\n\n",valor);
