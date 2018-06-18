@@ -104,7 +104,7 @@ void printPostOrder(Arvore* arvore){
 
 int nivel(Arvore* arvore,int valor) {
 
-    int n = 0;
+    int n = 1;
     Arvore* atual = arvore;
 
     while(atual->valor != valor) {
@@ -125,7 +125,7 @@ int nivel(Arvore* arvore,int valor) {
         }
     }
 
-     return n;
+    return n;
 }
 
 char *escolhe_arquivos() {
@@ -260,7 +260,11 @@ int main () {
                         printf("Nível do nó: %d\n", total);
                     } else {
 
-                        printf("N: %d\n", nivel(arvore,valor));
+                        printf("Nível do nó: %d\n", nivel(arvore,valor));
+
+                        /*
+                            Temos que descobrir como colocar o valor dos irmãos
+                        */
                     }
                      
                 } else {
