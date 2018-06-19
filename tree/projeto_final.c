@@ -11,6 +11,115 @@ struct lista{
 };
 typedef struct lista Lista;
 
+int menu();
+char *choseFile();
+int * loadFile(char *arquivo, int *vetor);
+Tree* loadTreeFromFile(Tree *root, char *arquivo);
+void showTree(Tree * root);
+void getHeight(Tree* root);
+void printInOrder(Tree * root);
+void printPreOrder(Tree * root);
+void printPostOrder(Tree * root);
+void balanceTree(Tree * rootB, int * vetor);
+Tree* removeValue(Tree * root, Tree **rootB);
+int nivel(Tree* arvore, int valor);
+int searchValue(Tree* arvore, int valor);
+
+int main(){
+
+  int * vetor;
+  Tree * root;
+  Tree * rootB;
+  char *arquivo;
+
+  root = NULL;
+  rootB = NULL;
+  int total = 0;
+  int valor = 0;
+
+  make_empty(root);
+  make_empty(rootB);
+
+  int opt;
+  do{
+    opt=menu();
+
+    switch (opt) {
+      case 0:
+        printf("Libera\n");
+        break;
+      case 1:
+        arquivo = choseFile();
+        vetor = calloc(cols,sizeof(int));
+        vetor = loadFile(arquivo, vetor);
+        root = loadTreeFromFile(root,arquivo);
+        break;
+      case 2:
+        showTree(root);
+        break;
+      case 3:
+        {
+          if(isFullTree(root))
+              printf("\n\nArvore é cheia. :) \n\n");
+          else
+              printf("\n\nArvore não é cheia. :( \n\n");
+        };
+        break;
+      case 4:
+        getHeight(root);
+        break;
+      case 5:
+        printInOrder(root);
+        break;
+      case 6:
+        printPreOrder(root);
+        break;
+      case 7:
+        printPostOrder(root);
+        break;
+      case 8:
+        balanceTree(rootB, vetor);
+        break;
+      case 9:
+        root = removeValue(root, &rootB);
+        break;
+      case 10:
+        printf("\n\n");
+
+        printf("Insira o valor que deseja pesquisar na árvore \n");
+        scanf("%d",&valor);
+
+        if(searchValue(root, valor)) {
+
+            printf("\n" );
+            printf("Valor do pai: %d\n", root->element);
+
+            if(root->element == valor) {
+
+                total = 1;
+                printf("Nível do nó: %d\n", total);
+            } else {
+
+                printf("Nível do nó: %d\n", nivel(root,valor));
+
+                /*
+                    Temos que descobrir como colocar o valor dos irmãos
+                */
+            }
+
+        } else {
+
+            printf("\nO NÚMERO %d NÃO PERTENCE A ÁRVORE!\n\n",valor);
+        }
+
+        break;
+      default:
+        printf("Digite uma opcao valida (: \n\n");
+    }
+  } while(opt);
+  return 0;
+
+}
 
 int menu(){
   int opt;
@@ -216,101 +325,4 @@ int searchValue(Tree* arvore, int valor) {
     }
 
     return arvore->element == valor || searchValue(arvore->left, valor) || searchValue(arvore->right, valor);
-}
-
-
-int main(){
-
-  int * vetor;
-  Tree * root;
-  Tree * rootB;
-  char *arquivo;
-
-  root = NULL;
-  rootB = NULL;
-  int total = 0;
-  int valor = 0;
-
-  make_empty(root);
-  make_empty(rootB);
-
-  int opt;
-  do{
-    opt=menu();
-
-    switch (opt) {
-      case 0:
-        printf("Libera\n");
-        break;
-      case 1:
-        arquivo = choseFile();
-        vetor = calloc(cols,sizeof(int));
-        vetor = loadFile(arquivo, vetor);
-        root = loadTreeFromFile(root,arquivo);
-        break;
-      case 2:
-        showTree(root);
-        break;
-      case 3:
-        {
-          if(isFullTree(root))
-              printf("\n\nArvore é cheia. :) \n\n");
-          else
-              printf("\n\nArvore não é cheia. :( \n\n");
-        };
-        break;
-      case 4:
-        getHeight(root);
-        break;
-      case 5:
-        printInOrder(root);
-        break;
-      case 6:
-        printPreOrder(root);
-        break;
-      case 7:
-        printPostOrder(root);
-        break;
-      case 8:
-        balanceTree(rootB, vetor);
-        break;
-      case 9:
-        root = removeValue(root, &rootB);
-        break;
-      case 10:
-        printf("\n\n");
-
-        printf("Insira o valor que deseja pesquisar na árvore \n");
-        scanf("%d",&valor);
-
-        if(searchValue(root, valor)) {
-
-            printf("\n" );
-            printf("Valor do pai: %d\n", root->element);
-
-            if(root->element == valor) {
-
-                total = 1;
-                printf("Nível do nó: %d\n", total);
-            } else {
-
-                printf("Nível do nó: %d\n", nivel(root,valor));
-
-                /*
-                    Temos que descobrir como colocar o valor dos irmãos
-                */
-            }
-
-        } else {
-
-            printf("\nO NÚMERO %d NÃO PERTENCE A ÁRVORE!\n\n",valor);
-        }
-
-        break;
-      default:
-        printf("Digite uma opcao valida (: \n\n");
-    }
-  } while(opt);
-  return 0;
-
 }
