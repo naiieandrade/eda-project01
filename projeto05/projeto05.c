@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "lib.h"
+#include<stdbool.h>
 
 Arvore* loadTreeFromFile(char arquivo[]) {
 
@@ -48,9 +49,23 @@ void showTree(Arvore* arvore) {
     printf("\n\n");
 }
 
-void isFull(Arvore* arvore) {
+bool isFull (Arvore* root) {
 
-    isFullTree(arvore);
+    if (root == NULL) {
+
+        return true;
+    }
+    
+    if (root->esquerda == NULL && root->direita == NULL) {
+        
+        return true;
+    }
+    
+    if ((root->esquerda) && (root->direita)) {
+        
+        return (isFull(root->esquerda) && isFull(root->direita));
+    }
+    return false;
 }
 
 int searchValue(Arvore* arvore, int valor) {
@@ -59,8 +74,51 @@ int searchValue(Arvore* arvore, int valor) {
     
       return 0;
     }
+
+    if(arvore == NULL) {
+
+        printf("\nValor não encontrado\n\n");
+    }
   
-    return arvore->valor == valor || searchValue(arvore->esquerda, valor) || searchValue(arvore->direita, valor);
+    int nivel = 1;
+
+    Arvore* pai = NULL;
+    Arvore* irmao = NULL;
+
+    while(arvore != NULL) {
+
+        if(arvore->valor == valor) {
+
+            break;
+        }
+
+        nivel ++;
+        pai = arvore;
+
+        if(arvore->valor > valor) {
+
+            irmao = arvore->direita;
+            arvore = pai->esquerda;
+        } else {
+
+            irmao = arvore->esquerda;
+            arvore = pai->direita;
+        }
+    }
+
+    printf("Nivel: %d\n", nivel);
+    
+    if (pai != NULL) {
+        
+        printf("O pai eh: %d\n", pai->valor);
+    }
+    if (irmao != NULL) {
+        
+        printf("O irmao eh: %d\n", irmao->valor);
+    } else {
+        
+        printf("Nao tem irmao\n");
+    }
 }
 
 Arvore* removeValue(Arvore* arvore,int valor) {
@@ -100,32 +158,6 @@ void printPostOrder(Arvore* arvore){
         printPostOrder(arvore->direita);
         printf("%d ", arvore->valor);
     }
-}
-
-int nivel(Arvore* arvore,int valor) {
-
-    int n = 1;
-    Arvore* atual = arvore;
-
-    while(atual->valor != valor) {
-
-        if(valor < atual->valor) {
-
-            n++;
-            atual = atual->esquerda;
-        } else {
-
-            n++;
-            atual = atual->direita;
-        }
-
-        if(atual == 0) {
-
-            return 0; //não tem filho
-        }
-    }
-
-    return n;
 }
 
 char *escolhe_arquivos() {
@@ -239,7 +271,13 @@ int main () {
 
             case 3:
                 
-                isFull(arvore);
+                if(isFull(arvore)) {
+
+                    printf("Árvore cheia\n");
+                } else {
+
+                    printf("Não está cheia\n");
+                }
             break;
 
             case 4:
@@ -248,29 +286,7 @@ int main () {
                 
                 printf("Insira o valor que deseja pesquisar na árvore \n");
                 scanf("%d",&valor);
-
-                if(searchValue(arvore, valor)) {
-
-                    printf("\n" );
-                    printf("Valor do pai: %d\n", arvore->valor);
-
-                    if(arvore->valor == valor) {
-
-                        total = 1;
-                        printf("Nível do nó: %d\n", total);
-                    } else {
-
-                        printf("Nível do nó: %d\n", nivel(arvore,valor));
-
-                        /*
-                            Temos que descobrir como colocar o valor dos irmãos
-                        */
-                    }
-                     
-                } else {
-                
-                    printf("\nO NÚMERO %d NÃO PERTENCE A ÁRVORE!\n\n",valor);
-                }
+                searchValue(arvore,valor);
                 
             break;
 
